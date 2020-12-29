@@ -1,0 +1,185 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../static/bootstarp/img/favicon.ico" th:href="@{/bootstarp/img/favicon.ico}">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../static/bootstarp/css/bootstrap.min.css" rel="stylesheet"
+          th:href="@{/bootstarp/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link href="../../static/bootstarp/custom/index.css" th:href="@{/bootstarp/custom/index.css}" rel="stylesheet">
+</head>
+
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/index">在线考试管理</a>
+    <!--/*@thymesVar id="user" type="com.songlea.springboot.demo.pojo.User"*/-->
+    <input th:value="'您好！尊敬的'+${session.user.account}" class="form-control form-control-dark w-100" type="text"
+           placeholder="您好！ 尊敬的用户" readonly>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/signout">Sign out</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addchoice">
+                            <span data-feather="home"></span>
+                            新增选择题
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addshortans">
+                            <span data-feather="file"></span>
+                            新增简答题
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/viewchoice">
+                            <span data-feather="file"></span>
+                            查看选择题
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/viewshortans">
+                            <span data-feather="file"></span>
+                            查看简答题
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/viewsolution">
+                            <span data-feather="shopping-cart"></span>
+                            阅卷
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/viewexamadmin">
+                            <span data-feather="bar-chart-2"></span>
+                            管理考场
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 th:text="'正在批阅 '+${choicelist.get(0).account}+' 的试卷'" class="h2">阅卷</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button class="btn btn-sm btn-outline-secondary">Share</button>
+                        <button class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                        <span data-feather="calendar"></span>
+                        This week
+                    </button>
+                </div>
+            </div>
+
+            <h2>选择题答卷</h2>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th>题目</th>
+                        <th>学生答案</th>
+                        <th>正确答案</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="choice:${choicelist}">
+                        <td th:text="${choice.desc}">ipsum</td>
+                        <td th:text="${choice.ans}">dolor</td>
+                        <td th:text="${choice.rightAns}">dolor</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>简答题题答卷</h2>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th>题目</th>
+                        <th>学生答案</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="shortans:${shortanslist}">
+                        <th th:text="${shortans.desc}">题目</th>
+                        <th th:text="${shortans.ans}">学生答案</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>批阅</h2>
+
+            <form action="/savemark">
+                <div class="form-group row">
+                    <label for="total" class="col-sm-2 col-form-label">总分</label>
+                    <div class="col-sm-10">
+                        <input th:value="(${choicelist.get(0).total}==null)? '总分' :${choicelist.get(0).total}" type="text"
+                               class="form-control" id="total"
+                               name="total" placeholder="总分">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="status" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <input type="hidden" class="form-control" id="status" name="status" value="yes">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="account" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <input th:value="${choicelist.get(0).account}" type="hidden" class="form-control" id="account"
+                               name="account">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+ ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/bootstarp/js/jquery-slim.min.js}" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../static/bootstarp/js/jquery-slim.min.js"><\/script>')</script>
+<script th:src="@{/bootstarp/js/popper.min.js}" src="../../static/bootstarp/js/popper.min.js"></script>
+<script th:src="@{/bootstarp/js/bootstrap.js}" src="../../static/bootstarp/js/bootstrap.min.js"></script>
+
+<!-- Icons -->
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+
+</body>
+</html>

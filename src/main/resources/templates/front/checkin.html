@@ -1,0 +1,80 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../static/bootstarp/img/favicon.ico" th:href="@{bootstarp/img/favicon.ico}">
+
+    <title>Cover Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../static/bootstarp/css/bootstrap.min.css" rel="stylesheet"
+          th:href="@{bootstarp/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link href="../../static/bootstarp/custom/checkin.css" th:href="@{bootstarp/custom/checkin.css}" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+        <div class="inner">
+            <h3 class="masthead-brand">考试须知</h3>
+            <!--<nav class="nav nav-masthead justify-content-center">-->
+            <!--<a class="nav-link active" href="#">Home</a>-->
+            <!--<a class="nav-link" href="#">Features</a>-->
+            <!--<a class="nav-link" href="#">Contact</a>-->
+            <!--</nav>-->
+        </div>
+    </header>
+
+    <main role="main" class="inner cover">
+        <h1 class="cover-heading">考 场 规 则</h1>
+        <p class="lead">
+            1.   考生应带好 二代身份证件及准考证（外国籍考生可用护照籍）。
+
+            2.   考生务必准时进入考场，迟到者 按放弃考试不得入场。
+
+            3.   考生进入考场后须将身份证件放于桌面上方，以便检查。
+
+            4.   考生除身份证件和考试用品外，其它个人物品，应放置在考场内指定的位置。
+
+            5.    严禁将手机等电子设备带入考场。违者按作弊处理。
+
+            6.    考生应在答题纸上正确填写个人信息和答案，并承担填写错误的后果。
+
+            7.    请考生在考场内保持安静，不得交谈和走动。违规者，考试成绩将被取消。
+
+            8.    考试中途不得离开考场。否则考试成绩将被取消。
+
+            9.    在考试过程中有任何疑问等情况，请举手示意监考老师解决，不得大声喧哗。
+        </p>
+        <p class="lead">
+            <a href="/paper" class="btn btn-lg btn-secondary">确认</a>
+        </p>
+    </main>
+
+    <footer class="mastfoot mt-auto">
+        <div class="inner">
+            <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a
+                    href="https://twitter.com/mdo">@mdo</a>.</p>
+        </div>
+    </footer>
+</div>
+
+<!-- Bootstrap core JavaScript
+ ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/bootstarp/js/jquery-slim.min.js}" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../static/bootstarp/js/jquery-slim.min.js"><\/script>')</script>
+<script th:src="@{/bootstarp/js/popper.min.js}" src="../../static/bootstarp/js/popper.min.js"></script>
+<script th:src="@{/bootstarp/js/bootstrap.js}" src="../../static/bootstarp/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>

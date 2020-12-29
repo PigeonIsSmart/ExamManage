@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.songlea.springboot.demo.dao.ProblemMapper">
+    <resultMap id="BaseResultMap" type="com.songlea.springboot.demo.pojo.Problem">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="desction" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="answer" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="right_ans" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="score" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="last_edit_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="IdResultMap" type="com.songlea.springboot.demo.pojo.Problem">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, title, desction, answer,right_ans,score, create_time, last_edit_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from problem
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM problem
+        WHERE title=#{title}
+    </select>
+    <select id="selectProblemListRandomlyByTitle" resultMap="IdResultMap" parameterType="map">
+        SELECT id
+        FROM problem
+        WHERE title=#{title}
+        ORDER BY RAND() LIMIT #{limit}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from problem
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.songlea.springboot.demo.pojo.Problem">
+    insert into problem (id, title, desction, 
+      answer, right_ans,score, create_time,
+      last_edit_time)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{desction,jdbcType=VARCHAR},
+      #{answer,jdbcType=VARCHAR}, #{rightAns,jdbcType=VARCHAR} ,#{score,jdbcType=INTEGER}, now(),
+      now())
+  </insert>
+    <insert id="insertSelective" parameterType="com.songlea.springboot.demo.pojo.Problem">
+        insert into problem
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="desction != null">
+                desction,
+            </if>
+            <if test="answer != null">
+                answer,
+            </if>
+            <if test="rightAns != null">
+                right_ans,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastEditTime != null">
+                last_edit_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="desction != null">
+                #{desction,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="rightAns != null">
+                #{rightAns,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                now(),
+            </if>
+            <if test="lastEditTime != null">
+                now(),
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.songlea.springboot.demo.pojo.Problem">
+        update problem
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="desction != null">
+                desction = #{desction,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                answer = #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="rightAns != null">
+                right_ans = #{rightAns,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastEditTime != null">
+                now(),
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.songlea.springboot.demo.pojo.Problem">
+    update problem
+    set title = #{title,jdbcType=VARCHAR},
+      desction = #{desction,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
+      right_ans = #{rightAns,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_edit_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

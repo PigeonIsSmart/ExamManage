@@ -1,0 +1,189 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../static/bootstarp/img/favicon.ico" th:href="@{bootstarp/img/favicon.ico}">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../static/bootstarp/css/bootstrap.min.css" rel="stylesheet"
+          th:href="@{bootstarp/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link href="../../static/bootstarp/custom/index.css" th:href="@{bootstarp/custom/index.css}" rel="stylesheet">
+</head>
+
+<style type="text/css">
+    .text-with-hr {
+        text-align: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    /*
+    横线，并通过z-index：-1将or附近的横线遮盖住
+    */
+    .text-with-hr:before {
+        position: absolute;
+        content: '';
+        top: 20px;
+        left: 0px;
+        width: 100%;
+        border-bottom: 1px solid #101010;
+        z-index: -1;
+    }
+
+    .text-with-hr span {
+        display: inline-block;
+        background: #101010;
+        padding: 10px;
+    }
+</style>
+
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/index">在线考试管理</a>
+    <!--/*@thymesVar id="user" type="com.songlea.springboot.demo.pojo.User"*/-->
+    <input th:value="'您好！尊敬的'+${session.user.account}" class="form-control form-control-dark w-100" type="text"
+           placeholder="您好！ 尊敬的用户" readonly>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/signout">Sign out</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/addchoice">
+                            <span data-feather="home"></span>
+                            新增选择题
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addshortans">
+                            <span data-feather="file"></span>
+                            新增简答题
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/viewchoice">
+                            <span data-feather="file"></span>
+                            查看选择题
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/viewshortans">
+                            <span data-feather="file"></span>
+                            查看简答题
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/viewsolution">
+                            <span data-feather="shopping-cart"></span>
+                            阅卷
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/viewexamadmin">
+                            <span data-feather="bar-chart-2"></span>
+                            管理考场
+                        </a>
+                    </li>
+                    <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="#">-->
+                    <!--<span data-feather="layers"></span>-->
+                    <!--Integrations-->
+                    <!--</a>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">新增选择题</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button class="btn btn-sm btn-outline-secondary">Share</button>
+                        <button class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--<canvas class="my-4" id="myChart" width="900" height="380"></canvas>-->
+
+            <!--<h2>Section title</h2>-->
+            <form action="/savechoice">
+                <div class="form-group">
+                    <label for="title">题型</label>
+                    <input type="text" value="选择题" class="form-control" id="title" name="title" placeholder="选择题"
+                           readonly>
+                </div>
+                <div class="form-group">
+                    <label for="desction">题目</label>
+                    <textarea class="form-control" id="desction" name="desction" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ans">选项</label>
+                    <textarea class="form-control" id="ans" name="ans" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="rightAns">答案</label>
+                    <select class="form-control" name="rightAns" id="rightAns">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="score">分值</label>
+                    <select class="form-control" id="score" name="score">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </div>
+
+                <!--<div class="text-with-hr">-->
+                <!--<span>NEXT</span>-->
+                <!--</div>-->
+            </form>
+
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+ ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/bootstarp/js/jquery-slim.min.js}" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../static/bootstarp/js/jquery-slim.min.js"><\/script>')</script>
+<script th:src="@{/bootstarp/js/popper.min.js}" src="../../static/bootstarp/js/popper.min.js"></script>
+<script th:src="@{/bootstarp/js/bootstrap.js}" src="../../static/bootstarp/js/bootstrap.min.js"></script>
+
+<!-- Icons -->
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+
+</body>
+</html>

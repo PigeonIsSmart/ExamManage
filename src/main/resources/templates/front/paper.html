@@ -1,0 +1,94 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../static/bootstarp/img/favicon.ico" th:href="@{bootstarp/img/favicon.ico}">
+
+    <title>Product example for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../static/bootstarp/css/bootstrap.min.css" rel="stylesheet"
+          th:href="@{bootstarp/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link href="../../static/bootstarp/custom/paper.css" th:href="@{bootstarp/custom/paper.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<form action="/push" id="frm">
+
+    <nav class="site-header sticky-top py-1">
+        <div class="container d-flex flex-column flex-md-row justify-content-between">
+            <input class="py-2 d-none d-md-inline-block" type="submit" value="提交">
+        </div>
+    </nav>
+
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-4 font-weight-normal">进入考试</h1>
+            <p class="lead font-weight-normal">本次考试时间为30分钟，请确认你的答案以及格式要求，在完成答题后方可提交，在30分钟后系统将为你自动提交答案</p>
+            <!--<a class="btn btn-outline-secondary" href="#">Coming soon</a>-->
+        </div>
+    </div>
+
+    <div th:each="problem : ${problemsList}" class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+        <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+            <div class="my-3 py-3">
+                <h2 th:text="${problem.getTitle()}" class="display-5">题目一</h2>
+                <h2 th:text="'本题分值: '+${problem.getScore()}+'分'" class="display-5">分值:20分</h2>
+                <p th:text="${problem.getDesction()}" class="lead">请回答:中国最后一位封建皇帝是谁?</p>
+                <p th:text="${problem.getAnswer()}" class="lead">A.溥仪 B.慈禧 C.张学良 D.蒋介石</p>
+            </div>
+            <div class="form-group bg-light box-shadow mx-auto"
+                 style="width: 80%; height: 100px; border-radius: 21px 21px 0 0;">
+                <label for="ans" style="width: 150px"></label>
+                <textarea id="ans" class="form-control" rows="3" name="answer" placeholder="请在此处作答"></textarea>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<!-- Bootstrap core JavaScript
+ ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/bootstarp/js/jquery-slim.min.js}" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../static/bootstarp/js/jquery-slim.min.js"><\/script>')</script>
+<script th:src="@{/bootstarp/js/popper.min.js}" src="../../static/bootstarp/js/popper.min.js"></script>
+<script th:src="@{/bootstarp/js/bootstrap.js}" src="../../static/bootstarp/js/bootstrap.min.js"></script>
+<script th:src="@{/bootstarp/js/holder.min.js}" src="../../static/bootstarp/js/holder.min.js"></script>
+<script>
+    Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+    });
+</script>
+<!--<script>-->
+    <!--var times = 45 * 60; //剩余时间,单位秒-->
+    <!--var timeDiv = document.getElementById("time");-->
+    <!--var timeObj = null;-->
+
+    <!--function timer() {-->
+        <!--if (times == 0) {-->
+            <!--//倒计时结束，提交表单-->
+            <!--document.getElementById("frm").submit();-->
+            <!--window.clearInterval(timeObj);-->
+            <!--return;-->
+            <!--4-->
+        <!--}-->
+        <!--var t = Math.floor(times / 60) + "分" + times % 60 + "秒"-->
+        <!--timeDiv.innerHTML = t;-->
+        <!--times&#45;&#45;;-->
+    <!--}-->
+
+    <!--timeObj = window.setInterval(timer, 1000);-->
+<!--</script>-->
+</body>
+</html>

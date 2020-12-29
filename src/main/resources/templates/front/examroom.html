@@ -1,0 +1,111 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../static/bootstarp/img/favicon.ico" th:href="@{bootstarp/img/favicon.ico}">
+
+    <title>Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../static/bootstarp/css/bootstrap.min.css" rel="stylesheet"
+          th:href="@{bootstarp/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link href="../../static/bootstarp/custom/examroom.css" th:href="@{bootstarp/custom/examroom.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">你好!</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <!--<li class="nav-item active">-->
+            <!--<a th:text="${session.user.account}" class="nav-link" href="#">Home-->
+            <!--<span class="sr-only">(current)</span>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item">-->
+            <!--<a class="nav-link" href="#">Link</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item">-->
+            <!--<a class="nav-link disabled" href="#">Disabled</a>-->
+            <!--</li>-->
+            <li class="nav-item dropdown">
+                <a th:text="${session.user.account}" class="nav-link dropdown-toggle" href="" id="dropdown01"
+                   data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">User
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="/viewuser">我的信息</a>
+                    <a class="dropdown-item" href="/signout">登出</a>
+                    <!--<a class="dropdown-item" href="#">Something else here</a>-->
+                </div>
+            </li>
+        </ul>
+
+        <!-- 搜索 -->
+        <!--<form class="form-inline my-2 my-lg-0">-->
+        <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">-->
+        <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+        <!--</form>-->
+    </div>
+</nav>
+
+<main role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">学生在线考场</h1>
+            <p>This is a template for a simple marketing or informational website. It includes a large callout called a
+                jumbotron and three supporting pieces of content. Use it as a starting point to create something more
+                unique.</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+
+            <div class="col-md-4" th:each="examroom : ${examrooms}">
+                <h2 th:text="${examroom.title}">Examination</h2>
+                <p th:text="${examroom.desction}">Donec id elit non mi porta gravida at eget metus.</p>
+                <p>
+                    <a class="btn btn-secondary"
+                       th:href="@{/getpaper(paperId=${examroom.paperId},examroomId=${examroom.id})}"
+                       role="button">View details &raquo;</a>
+                </p>
+            </div>
+
+        </div>
+        <hr>
+
+    </div> <!-- /container -->
+
+</main>
+
+<footer class="container">
+    <p>&copy; Company 2020-2021</p>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/bootstarp/js/jquery-slim.min.js}" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../static/bootstarp/js/jquery-slim.min.js"><\/script>')</script>
+<script th:src="@{/bootstarp/js/bootstrap.js}" src="../../static/bootstarp/js/popper.min.js"></script>
+<script th:src="@{/bootstarp/js/bootstrap.js}" src="../../static/bootstarp/js/bootstrap.min.js"></script>
+</body>
+</html>

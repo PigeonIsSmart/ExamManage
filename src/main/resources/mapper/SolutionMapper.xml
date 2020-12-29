@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.songlea.springboot.demo.dao.SolutionMapper">
+    <resultMap id="BaseResultMap" type="com.songlea.springboot.demo.pojo.Solution">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="account" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="paper_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="choice_ans" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="judge_ans" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="short_answer_ans" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="total" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="last_edit_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, account, paper_id, choice_ans, judge_ans, short_answer_ans, status, total, create_time,
+    last_edit_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from solution
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByAccount" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solution
+        WHERE account = #{account}
+    </select>
+    <select id="selectByStatus" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solution
+        WHERE status = #{status}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solution
+    </select>
+    <select id="selectByAccountAndPaperId" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solution
+        WHERE account = #{account} and
+        paper_id = #{paperId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from solution
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.songlea.springboot.demo.pojo.Solution">
+    insert into solution (id, account, paper_id, 
+      choice_ans, judge_ans, short_answer_ans, 
+      status, total, create_time,
+      last_edit_time)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{paperId,jdbcType=INTEGER},
+      #{choiceAns,jdbcType=VARCHAR}, #{judgeAns,jdbcType=VARCHAR}, #{shortAnswerAns,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{total,jdbcType=INTEGER}, now(),
+      now())
+  </insert>
+    <insert id="insertSelective" parameterType="com.songlea.springboot.demo.pojo.Solution">
+        insert into solution
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="paperId != null">
+                paper_id,
+            </if>
+            <if test="choiceAns != null">
+                choice_ans,
+            </if>
+            <if test="judgeAns != null">
+                judge_ans,
+            </if>
+            <if test="shortAnswerAns != null">
+                short_answer_ans,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="total != null">
+                total,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastEditTime != null">
+                last_edit_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="paperId != null">
+                #{paperId,jdbcType=INTEGER},
+            </if>
+            <if test="choiceAns != null">
+                #{choiceAns,jdbcType=VARCHAR},
+            </if>
+            <if test="judgeAns != null">
+                #{judgeAns,jdbcType=VARCHAR},
+            </if>
+            <if test="shortAnswerAns != null">
+                #{shortAnswerAns,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="total != null">
+                #{total,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                now(),
+            </if>
+            <if test="lastEditTime != null">
+                now(),
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.songlea.springboot.demo.pojo.Solution">
+        update solution
+        <set>
+            <if test="account != null">
+                account = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="paperId != null">
+                paper_id = #{paperId,jdbcType=INTEGER},
+            </if>
+            <if test="choiceAns != null">
+                choice_ans = #{choiceAns,jdbcType=VARCHAR},
+            </if>
+            <if test="judgeAns != null">
+                judge_ans = #{judgeAns,jdbcType=VARCHAR},
+            </if>
+            <if test="shortAnswerAns != null">
+                short_answer_ans = #{shortAnswerAns,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="total != null">
+                total = #{total,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastEditTime != null">
+                now(),
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.songlea.springboot.demo.pojo.Solution">
+    update solution
+    set account = #{account,jdbcType=VARCHAR},
+      paper_id = #{paperId,jdbcType=INTEGER},
+      choice_ans = #{choiceAns,jdbcType=VARCHAR},
+      judge_ans = #{judgeAns,jdbcType=VARCHAR},
+      short_answer_ans = #{shortAnswerAns,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      total = #{total,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_edit_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateTotalAndStatusByAccount" parameterType="com.songlea.springboot.demo.pojo.Solution">
+        UPDATE solution
+        SET total = #{total},
+        status = #{status},
+        last_edit_time = now()
+        where account = #{account}
+    </update>
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.songlea.springboot.demo.dao.PaperMapper">
+    <resultMap id="BaseResultMap" type="com.songlea.springboot.demo.pojo.Paper">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="choice_id_list" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="judge_id_list" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="short_ans_id_list" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="last_edit_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, choice_id_list, judge_id_list, short_ans_id_list, create_time, last_edit_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from paper
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectPaperRandomly" resultMap="BaseResultMap" parameterType="int">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM paper
+        ORDER BY RAND() LIMIT #{limit}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from paper
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.songlea.springboot.demo.pojo.Paper">
+    insert into paper (id, choice_id_list, judge_id_list, 
+      short_ans_id_list, create_time, last_edit_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{choiceIdList,jdbcType=VARCHAR}, #{judgeIdList,jdbcType=VARCHAR}, 
+      #{shortAnsIdList,jdbcType=VARCHAR}, now(), now()
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.songlea.springboot.demo.pojo.Paper">
+        insert into paper
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="choiceIdList != null">
+                choice_id_list,
+            </if>
+            <if test="judgeIdList != null">
+                judge_id_list,
+            </if>
+            <if test="shortAnsIdList != null">
+                short_ans_id_list,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastEditTime != null">
+                last_edit_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="choiceIdList != null">
+                #{choiceIdList,jdbcType=VARCHAR},
+            </if>
+            <if test="judgeIdList != null">
+                #{judgeIdList,jdbcType=VARCHAR},
+            </if>
+            <if test="shortAnsIdList != null">
+                #{shortAnsIdList,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                now(),
+            </if>
+            <if test="lastEditTime != null">
+                now(),
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.songlea.springboot.demo.pojo.Paper">
+        update paper
+        <set>
+            <if test="choiceIdList != null">
+                choice_id_list = #{choiceIdList,jdbcType=VARCHAR},
+            </if>
+            <if test="judgeIdList != null">
+                judge_id_list = #{judgeIdList,jdbcType=VARCHAR},
+            </if>
+            <if test="shortAnsIdList != null">
+                short_ans_id_list = #{shortAnsIdList,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastEditTime != null">
+                now(),
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.songlea.springboot.demo.pojo.Paper">
+    update paper
+    set choice_id_list = #{choiceIdList,jdbcType=VARCHAR},
+      judge_id_list = #{judgeIdList,jdbcType=VARCHAR},
+      short_ans_id_list = #{shortAnsIdList,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_edit_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

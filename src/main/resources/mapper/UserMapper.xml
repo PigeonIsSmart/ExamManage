@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.songlea.springboot.demo.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.songlea.springboot.demo.pojo.User">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="account" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="passwd" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="user_role" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="exam_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="last_edit_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, account, passwd, user_role, exam_id,create_time, last_edit_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectAccountAndPasswd" parameterType="map" resultType="java.lang.Integer">
+      SELECT COUNT(1)
+      FROM user
+      WHERE account=#{account}
+      and passwd=#{passwd}
+    </select>
+    <select id="selectRoleByAccount" parameterType="String" resultType="java.lang.String">
+    SELECT user_role
+    FROM user
+    WHERE account=#{account}
+  </select>
+    <select id="selectByAccount" parameterType="String" resultType="com.songlea.springboot.demo.pojo.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE account=#{account}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.songlea.springboot.demo.pojo.User">
+    insert into user (id, account, passwd, 
+      user_role, exam_id,create_time, last_edit_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
+      #{userRole,jdbcType=VARCHAR},#{examId,jdbcType=VARCHAR},now(),now()
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.songlea.springboot.demo.pojo.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="passwd != null">
+                passwd,
+            </if>
+            <if test="userRole != null">
+                user_role,
+            </if>
+            <if test="examId != null">
+                exam_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastEditTime != null">
+                last_edit_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="userRole != null">
+                #{userRole,jdbcType=VARCHAR},
+            </if>
+            <if test="examId!= null">
+                #{examId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                now(),
+            </if>
+            <if test="lastEditTime != null">
+                now(),
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.songlea.springboot.demo.pojo.User">
+        update user
+        <set>
+            <if test="account != null">
+                account = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                passwd = #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="userRole != null">
+                user_role = #{userRole,jdbcType=VARCHAR},
+            </if>
+            <if test="examId!= null">
+                exam_id = #{examId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastEditTime != null">
+                now(),
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.songlea.springboot.demo.pojo.User">
+    update user
+    set account = #{account,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      user_role = #{userRole,jdbcType=VARCHAR},
+      exam_id = #{examId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_edit_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
